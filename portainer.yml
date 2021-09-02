@@ -6,7 +6,6 @@
     - name: Stop container
       community.docker.docker_container:
         name: Portainer
-        image: portainer/portainer-ce
         state: stopped
     - name: Remove container
       community.docker.docker_container:
