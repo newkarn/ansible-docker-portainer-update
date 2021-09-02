@@ -1,0 +1,26 @@
+---
+- name: Update portainer container
+  become: true
+  hosts: portainer
+  tasks: 
+    - name: Stop container
+      community.docker.docker_container:
+        name: Portainer
+        image: portainer/portainer-ce
+        state: stopped
+    - name: Remove container
+      community.docker.docker_container:
+        name: Portainer
+        state: absent
+    - name: Create container
+      community.docker.docker_container:
+        name: Portainer
+        image: portainer/portainer-ce
+        pull: true
+        hostname: portainer
+        restart_policy: always
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - portainer_data:/data
+        env: TZ='Europe/Stockholm'
+        network_mode: host
